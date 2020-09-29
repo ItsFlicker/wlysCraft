@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="author" content="wlys">
+    <title>wlys—index</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='bg.jpg') }}");
+            background-repeat: no-repeat;
+        }
+    </style>
+    <script src="{{ url_for('static', filename='jquery-3.4.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='Eggs.js') }}"></script>
+</head>
+<body>
+    <header>
+        <nav>
+        <ul>
+            <li><a href="#" style="color: red" id="eggopener">主页</a></li>
+            <li><a href="{{ url_for('programs') }}"  style="color: red">小程序</a></li>
+            <li class="hide" id="egg"><a href="#" onclick="open(location, '_self').close();">Egg</a></li>
+            <li><a href="{{ url_for('download') }}"  style="color: red">下载</a></li>
+            <li><a href="{{ url_for('video') }}" style="color: red">视频</a></li>
+        </ul>
+        </nav>
+    </header>
+    <section style="margin-left: 2%;">
+        <div class="fd">
+            这是......
+        </div>
+        <div class="fd" style="text-decoration: line-through">
+            反正很没用就是了
+        </div>
+        <br/>
+        <h4 class="fd">天气查询:(当前不可用)</h4>
+        <button id="getweather">查询当前城市天气</button>
+        <div id="weathershow" style="text-align: center;color: white;">
+            <p id="ws-one" style="font-size: 150%"></p>
+            <p id="ws-two" style="font-size: 100%"></p>
+            <p id="ws-three" style="font-size: 100%"></p><br/>
+            <p id="ws-four" style="margin-top: 5px"></p>
+            <ul id="ws-five" class="fd"></ul>
+        </div>
+
+    </section>
+    <footer>
+    </footer>
+    <script>
+        $(function () {
+            var p= 0;
+            $("#eggopener").on("click", function () {
+                if (p > 5){
+                    $("#egg").fadeIn(3000);
+                }else{
+                    p++;
+                }
+            });
+            var $weathershow = $("#weathershow");
+            $weathershow.hide();
+            $("#getweather").on("click", function (){
+                $.ajax({
+                type: 'POST',
+                url: '/index/weather',
+                dataType: 'json',
+                success: function (data) {
+                    $weathershow.show();
+                    var weathern = data.weathern
+                    var weatherf = data.weatherf
+                    var now = weathern.HeWeather6[0].now;
+                    var forecast = weatherf.HeWeather6[0].daily_forecast;
+                    $("#ws-one").html(now.tmp+"℃");
+                    $("#ws-two").html(forecast[0].tmp_max+"℃/"+forecast[0].tmp_min+"℃");
+                    $("#ws-three").html(now.cond_txt+" 风力"+now.wind_sc+"级");
+                    $("#ws-four").html(weathern.HeWeather6[0].basic.location);
+                    $.each(forecast, function (i, day) {
+                        $("#ws-five").append("<li>"+day.date+"  "+day.cond_txt_d+"  "+day.tmp_max+"℃/"+day.tmp_min+"℃</li><br/>")
+                    });
+                    $("#getweather").fadeOut();
+                },
+                error: function () {
+                    alert("获取失败，请稍后再试");
+                    $("#getweather").fadeIn();
+                }
+            });
+            });
+        })
+    </script>
+</body>
+</html>

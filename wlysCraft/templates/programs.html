@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <meta name="author" content="wlys">
+    <title>wlys—小程序</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script src="{{ url_for('static', filename='jquery-3.4.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='Eggs.js') }}"></script>
+    <noscript><p style="font-size: 150%">警告:检测到您的浏览器关闭了JavaScript,部分功能可能无法正常使用!</p></noscript>
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='bg.jpg') }}");
+            background-repeat: no-repeat;
+        }
+        section {
+            margin-left: 2%;
+        }
+        .progress{
+            width:300px;
+            height:30px;
+            border:1px solid #45ec56;
+            margin-top: 7px;
+			}
+        .info {
+            width:0;
+            height:30px;
+            background:#45ec56;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}" style="color: red">主页</a></li>
+            <li><a href="#"  style="color: red">小程序</a></li>
+            <li><a href="{{ url_for('download') }}"  style="color: red">下载</a></li>
+            <li><a href="{{ url_for('video') }}" style="color: red">视频</a></li>
+        </ul>
+    </nav>
+</header>
+<section>
+    <h4 class="bold">质数判断:</h4>
+    <p class="bold">
+        <input type="number" id="zssr" size="10" maxlength="10">
+    </p>
+    <p class="fd" id="zsjg">结果:</p>
+    <h4 class="bold">二维码生成:（使用草料API)(当前不可用)</h4>
+    <input id="qrtext">
+    <button id="qrsubmit">生成</button>
+    <br/>
+    <iframe src="https://cli.im/api/qrcode/code?text=" width="1000px" height="500px" id="qrwindow" frameborder="0" class="hide"></iframe>
+    <h4 class="bold">谷歌翻译：(当前不可用)</h4>
+    <textarea style="width: 200px;height: 100px; " id="fanyitext"></textarea><br/>
+    <button id="fanyisubmit">翻译</button>
+    <button id="fanyiclear" onclick="document.getElementById('fanyitext').value='';">清空</button><br/>
+    <p id="fanyiresult"></p>
+    <h4 class="bold">病毒检测：(当前不可用)</h4>
+    <input type="file" id="bdfile"><br/>
+    <button id="bdupload" style="margin-top: 5px;">上传文件</button>
+    <div class="progress" style="display: none">
+			<div class="info" id="bdinfo">
+			</div>
+    </div>
+    <div id="bdresult"></div>
+    <iframe src="" style="display: none" width="95%" height="800px" id="bdshow"></iframe>
+</section>
+<script>
+    var zssr = document.getElementById("zssr");
+    var zsjg = document.getElementById("zsjg");
+
+    zssr.addEventListener("input", zspd);
+
+    function zspd()
+    {
+        var zs = parseInt(zssr.value);
+        if (isNaN(zs)){
+            zsjg.innerHTML = "";
+            return false;
+        }
+        if (zs < 2){
+            zsjg.innerHTML = "结果:" + zs + "不是一个有效数字!(请输入大于1的整数)";
+            return false;
+        }
+
+        if (zs < 4){
+            zsjg.innerHTML = "结果:" + zs + "是一个质数!";
+            return true;
+        }
+        for (var a = 2;a <= zs / 2;a++)
+        {
+            if (zs % a === 0)
+            {
+                zsjg.innerHTML = "结果:" + zs + "是一个合数!" + "\n" + "它的因数除了1和它本身还有" + a + "!";
+                return true;
+            }
+        }
+
+        zsjg.innerHTML = "结果:" + zs + "是一个质数!";
+        return true;
+    }
+    {#$(function (){#}
+    {#    var $zssr = $("#zssr");#}
+    {#    var $zsjg = $("#zsjg")#}
+    {#    $zssr.on("input", zspd);#}
+    {##}
+    {#    function zspd() {#}
+    {#        $.ajax({#}
+    {#            type: "POST",#}
+    {#            url: "/programs/zspd",#}
+    {#            data: {'num': document.getElementById('zssr').value},#}
+    {#            dataType: 'json',#}
+    {#            success: function (data) {#}
+    {#                console.log(data)#}
+    {#                console.log("结果: " + String(document.getElementById('zssr').value) + data["zsjg"])#}
+    {#                $zsjg.html("结果: " + String(document.getElementById('zssr').value) + data['zsjg'])#}
+    {#            },#}
+    {#            error: function () {#}
+    {##}
+    {#            }#}
+    {#        })#}
+    {#    }#}
+    {##}
+
+</script>
+</body>
+</html>
