@@ -30,4 +30,5 @@ class Messages(db.Model):
     __tabname__ = "messages"
     message = db.Column(db.String(100), primary_key=True, nullable=False)
     username = db.Column(db.String(20), nullable=False)
-    uploadtime = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
+    userid = db.Column(db.Integer, nullable=False)
+    sendtime = db.Column(db.DateTime, default=datetime.datetime.now, onupdate=datetime.datetime.now)
