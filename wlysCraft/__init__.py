@@ -21,6 +21,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(os.path.dirname(app.root_path), 'wlysCraft\\data.db')
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(app.root_path), 'wlysCraft\\uploadfiles')
 
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.mkdir(app.config['UPLOAD_FOLDER'])
+
 db = SQLAlchemy(app)
 
 login_manager = LoginManager(app)  # 实例化扩展类
