@@ -31,7 +31,7 @@
                 <div class="card-content white-text">
                     <span class="card-title">{{ file.filename }}</span>
                     <p>上传者:{{ file.username }}</p>
-                    <p>上传日期:{{ file.uploadtime }}</p>
+                    <p>上传日期:{{ file.uploadtime.strftime('%Y-%m-%d %H:%M:%S') }}</p>
                     <p>文件描述:{{ file.filedescribe }}</p>
                 </div>
                 <div class="card-action">
