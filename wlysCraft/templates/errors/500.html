@@ -1,4 +1,7 @@
-{% block content %}
+{% include "layout/base.html" %}
+{% block body %}
+    <header class="center">
     <h4>Internal Server Error - 500</h4><br>
     <a href="{{ url_for('index') }}">Go Back</a>
+    </header>
 {% endblock %}

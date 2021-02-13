@@ -1,0 +1,26 @@
+{% extends "layout/base.html" %}
+{% block title %}wlysCraft-upload{% endblock %}
+{% block body %}
+    <header class="center">
+        <h4 class="red-text">文件上传</h4>
+        <br>
+    </header>
+    <section>
+        <form method="post" enctype="multipart/form-data">
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>选择文件</span>
+            <input type="file" name="file" required>
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+        <div class="file-field">
+            <textarea id="filedescribe" class="materialize-textarea" name="filedescribe" required></textarea>
+            <label for="filedescribe">文件描述</label>
+        </div>
+            <input class="btn" type="submit" name="submit" value="Submit">
+        </form>
+    </section>
+{% endblock %}

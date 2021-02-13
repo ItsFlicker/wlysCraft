@@ -1,73 +1,25 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width initial-scale=1.0">
-    <meta name="author" content="wlys">
-    <title>wlys—小程序</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <script src="{{ url_for('static', filename='jquery-3.4.1.js') }}"></script>
-    <script src="{{ url_for('static', filename='Eggs.js') }}"></script>
-    <noscript><p style="font-size: 150%">警告:检测到您的浏览器关闭了JavaScript,部分功能可能无法正常使用!</p></noscript>
-    <style>
-        body {
-            background-image: url("{{ url_for('static', filename='bg.jpg') }}");
-            background-repeat: no-repeat;
-        }
-        section {
-            margin-left: 2%;
-        }
-        .progress{
-            width:300px;
-            height:30px;
-            border:1px solid #45ec56;
-            margin-top: 7px;
-			}
-        .info {
-            width:0;
-            height:30px;
-            background:#45ec56;
-        }
-    </style>
-</head>
-<body>
-<header>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('index') }}" style="color: red">主页</a></li>
-            <li><a href="#"  style="color: red">小程序</a></li>
-            <li><a href="{{ url_for('download') }}"  style="color: red">下载</a></li>
-            <li><a href="{{ url_for('video') }}" style="color: red">视频</a></li>
-        </ul>
-    </nav>
-</header>
-<section>
-    <h4 class="bold">质数判断:</h4>
-    <p class="bold">
-        <input type="number" id="zssr" size="10" maxlength="10">
-    </p>
-    <p class="fd" id="zsjg">结果:</p>
-    <h4 class="bold">二维码生成:（使用草料API)(当前不可用)</h4>
-    <input id="qrtext">
-    <button id="qrsubmit">生成</button>
-    <br/>
-    <iframe src="https://cli.im/api/qrcode/code?text=" width="1000px" height="500px" id="qrwindow" frameborder="0" class="hide"></iframe>
-    <h4 class="bold">谷歌翻译：(当前不可用)</h4>
-    <textarea style="width: 200px;height: 100px; " id="fanyitext"></textarea><br/>
-    <button id="fanyisubmit">翻译</button>
-    <button id="fanyiclear" onclick="document.getElementById('fanyitext').value='';">清空</button><br/>
-    <p id="fanyiresult"></p>
-    <h4 class="bold">病毒检测：(当前不可用)</h4>
-    <input type="file" id="bdfile"><br/>
-    <button id="bdupload" style="margin-top: 5px;">上传文件</button>
-    <div class="progress" style="display: none">
-			<div class="info" id="bdinfo">
-			</div>
-    </div>
-    <div id="bdresult"></div>
-    <iframe src="" style="display: none" width="95%" height="800px" id="bdshow"></iframe>
-</section>
+{% extends "layout/base.html" %}
+{% block title %}wlysCraft-小程序{% endblock %}
+{% block style %}{% endblock %}
+{% block body %}
+    <header class="center">
+        <h4 class="red-text">小程序</h4>
+    </header>
+    <section class="container left" style="margin-top:10%">
+        <div class="row">
+            <div class="col s6 m6">
+                质数判断:
+                <div class="input-field inline">
+                    <input type="number" id="zssr" length="10">
+                    <label for="zssr">数字</label>
+                </div>
+                <p id="zsjg"></p>
+            </div>
+        </div>
+
+    </section>
+{% endblock %}
+{% block script %}
 <script>
     var zssr = document.getElementById("zssr");
     var zsjg = document.getElementById("zsjg");
@@ -126,5 +78,4 @@
     {##}
 
 </script>
-</body>
-</html>
+{% endblock %}

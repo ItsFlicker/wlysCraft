@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width initial-scale=1.0">
-    <meta name="author" content="wlys">
-    <title>wlys—下载</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <script src="{{ url_for('static', filename='jquery-3.4.1.js') }}"></script>
-    <script src="{{ url_for('static', filename='Eggs.js') }}"></script>
+{% extends "layout/base.html" %}
+{% block title %}wlysCraft-download{% endblock %}
+{% block style %}
     <style>
         .python {
             background-image: url("{{ url_for('static', filename='Python.jpg') }}");
@@ -24,70 +16,37 @@
             background-size: 35%;
         }*/
     </style>
-</head>
-<body>
-<header>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('index') }}" style="color: red">主页</a></li>
-            <li><a href="{{ url_for('programs') }}"  style="color: red">小程序</a></li>
-            <li><a href="#"  style="color: red">下载</a></li>
-            <li><a href="{{ url_for('video') }}" style="color: red">视频</a></li>
-        </ul>
-    </nav>
-</header>
-    <section>
-        <h1 style="text-align: center">Python</h1>
-        <ul style="padding-left: 3%" class="python">
-            <li>
-                <h3>翻译</h3>
-                <p>四种翻译</p>
-                <a href="{{url_for('static', filename='')}}" class="download">
-                    <span>下载 最新版本</span>
-                    <span>for Windows</span>
-                </a>
-                <br/>
-            </li>
-            <li>
-            <h3>二维码生成器</h3>
-            <p>无需联网<p>
-            <a href="{{url_for('static', filename='')}}" class="download">
-                <span>下载</span>
-                <span>最新版本 for Windows</span>
-            </a>
-            </li>
-            <li>
-                <h3>冠状病毒实时状况</h3>
-                <p>桌面实时滚动显示, 所有城市查询, 获取最新资讯</p>
-                <a href="{{url_for('static', filename='')}}" class="download">下载 最新版本 for Windows</a>
-            </li>
-            <li>
-                <h3>真..可..爱..?(病毒)</h3>
-                <a href="{{url_for('static', filename='')}}" class="download">下载 2.3 for Windows(x64)</a>
-                <a href="{{url_for('static', filename='')}}" class="download">下载 5.6 for Windows</a>
-            </li>
-            <li>
-                <h3>五   彩   缤   纷(病毒)</h3>
-                <a href="{{url_for('static', filename='')}}" class="download">下载 ??? for Windows</a>
-            </li>
-        </ul>
-        <h1 style="text-align: center">C</h1>
-        <ul style="padding-left: 3%">
-            <li>
-                <h4>屏幕溶解</h4>
-                <p>无害</p>
-                <a href="{{url_for('static', filename='')}}" class="download">下载 1.0 for Windows(x64)</a>
-                <a href="{{url_for('static', filename='')}}" class="download">下载 1.0 for Windows(x32)</a>
-            </li>
-        </ul>
-        <h1 style="text-align: center">小工具</h1>
-        <ul style="padding-left: 3%">
-            <li>
-                <h3>开启gpedit</h3>
-                <p>让家庭版Windows10也能使用组策略</p>
-                <a href="{{url_for('static', filename='')}}" class="download">下载 for Windows10家庭版</a>
-            </li>
-        </ul>
+{% endblock %}
+{% block body %}
+    <header>
+        <h4 class="red-text center">
+            文件下载
+        </h4>
+    </header>
+    <section style="margin-top:10%">
+        {% for file in files %}
+            <div class="row">
+            <div class="col s12 m6">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ file.filename }}</span>
+                    <p>上传者:{{ file.username }}</p>
+                    <p>上传日期:{{ file.uploadtime }}</p>
+                    <p>文件描述:{{ file.filedescribe }}</p>
+                </div>
+                <div class="card-action">
+                    <a href="{{ url_for('downloadfile', filename=file.filename) }}">下载文件</a>
+                    <a href="{{ url_for('deletefile', filename=file.filename) }}">删除文件</a>
+                </div>
+            </div>
+            </div>
+            </div>
+        {% endfor %}
     </section>
-</body>
-</html>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red" href="{{ url_for("upload") }}">
+            <i class="material-icons large">cloud_upload</i>
+        </a>
+    </div>
+
+{% endblock %}
